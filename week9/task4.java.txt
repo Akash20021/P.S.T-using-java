@@ -1,0 +1,62 @@
+
+import java.util.*;
+
+class BankAccount {
+    private final String accountNumber;
+    private double balance;
+
+    BankAccount(String accountNumber, double initialBalance) {
+        this.accountNumber = accountNumber;
+        this.balance = initialBalance;
+    }
+
+    void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+        }
+    }
+
+    boolean withdraw(double amount) {
+        if (amount > 0 && amount <= balance) {
+            balance -= amount;
+            return true;
+        }
+        return false;
+    }
+
+    String getAccountNumber() {
+        return accountNumber;
+    }
+
+    double getBalance() {
+        return balance;
+    }
+}
+
+public class Week9Task1 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        String accountNumber = sc.next();
+        double initialBalance = sc.nextDouble();
+        int operationCount = sc.nextInt();
+
+        BankAccount account = new BankAccount(accountNumber, initialBalance);
+
+        for (int i = 0; i < operationCount; i++) {
+            String operation = sc.next();
+            double amount = sc.nextDouble();
+
+            if (operation.equalsIgnoreCase("DEPOSIT")) {
+                account.deposit(amount);
+            } else if (operation.equalsIgnoreCase("WITHDRAW")) {
+                if (!account.withdraw(amount)) {
+                    System.out.println("Insufficient balance or invalid amount");
+                }
+            }
+        }
+
+        System.out.println("Account: " + account.getAccountNumber());
+        System.out.printf(Locale.US, "Balance: %.2f%n", account.getBalance());
+    }
+}

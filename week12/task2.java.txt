@@ -1,0 +1,24 @@
+// Week 12 - Task 2: Sparse String Queries
+import java.util.*;
+
+public class Week12Task2 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        Map<String, Integer> frequency = new HashMap<>();
+
+        for (int i = 0; i < n; i++) {
+            String value = sc.next();
+            frequency.put(value, frequency.getOrDefault(value, 0) + 1);
+        }
+
+        int queryCount = sc.nextInt();
+        StringBuilder output = new StringBuilder();
+
+        for (int i = 0; i < queryCount; i++) {
+            output.append(frequency.getOrDefault(sc.next(), 0)).append('\n');
+        }
+
+        System.out.print(output);
+    }
+}

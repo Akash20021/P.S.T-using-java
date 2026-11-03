@@ -1,0 +1,89 @@
+// Week 9 - Task 4: Payment Processing System
+import java.util.*;
+
+interface Payment {
+    void pay(double amount);
+    double getProcessingFeeRate();
+    String getPaymentType();
+}
+
+class CreditCardPayment implements Payment {
+    public void pay(double amount) { }
+
+    public double getProcessingFeeRate() {
+        return 0.02;
+    }
+
+    public String getPaymentType() {
+        return "CreditCard";
+    }
+}
+
+class UPIPayment implements Payment {
+    public void pay(double amount) { }
+
+    public double getProcessingFeeRate() {
+        return 0.01;
+    }
+
+    public String getPaymentType() {
+        return "UPI";
+    }
+}
+
+class NetBankingPayment implements Payment {
+    public void pay(double amount) { }
+
+    public double getProcessingFeeRate() {
+        return 0.015;
+    }
+
+    public String getPaymentType() {
+        return "NetBanking";
+    }
+}
+
+abstract class PaymentProcessor {
+    abstract double processPayment(Payment payment, double amount);
+}
+
+class OnlinePaymentProcessor extends PaymentProcessor {
+    @Override
+    double processPayment(Payment payment, double amount) {
+        double finalAmount = amount * (1 + payment.getProcessingFeeRate());
+        payment.pay(finalAmount);
+        return finalAmount;
+    }
+}
+
+public class Week9Task4 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        PaymentProcessor processor = new OnlinePaymentProcessor();
+
+        for (int i = 0; i < n; i++) {
+            int type = sc.nextInt();
+            double amount = sc.nextDouble();
+
+            Payment payment;
+            switch (type) {
+                case 1:
+                    payment = new CreditCardPayment();
+                    break;
+                case 2:
+                    payment = new UPIPayment();
+                    break;
+                case 3:
+                    payment = new NetBankingPayment();
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid payment type");
+            }
+
+            double finalAmount = processor.processPayment(payment, amount);
+            System.out.printf(Locale.US, "%s %.2f%n",
+                    payment.getPaymentType(), finalAmount);
+        }
+    }
+}

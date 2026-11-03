@@ -1,0 +1,82 @@
+// Week 10 - Task 5: Music Playlist Using a Singly Linked List
+import java.util.*;
+
+public class Week10Task5 {
+    static class Node {
+        String song;
+        Node next;
+
+        Node(String song) {
+            this.song = song;
+        }
+    }
+
+    static class Playlist {
+        private Node head;
+
+        void addSong(String song) {
+            Node node = new Node(song);
+            if (head == null) {
+                head = node;
+                return;
+            }
+
+            Node current = head;
+            while (current.next != null) {
+                current = current.next;
+            }
+            current.next = node;
+        }
+
+        void removeSong(String song) {
+            if (head == null) return;
+
+            if (head.song.equals(song)) {
+                head = head.next;
+                return;
+            }
+
+            Node current = head;
+            while (current.next != null && !current.next.song.equals(song)) {
+                current = current.next;
+            }
+
+            if (current.next != null) {
+                current.next = current.next.next;
+            }
+        }
+
+        void display() {
+            Node current = head;
+            while (current != null) {
+                System.out.println(current.song);
+                current = current.next;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Playlist playlist = new Playlist();
+
+        int operations = Integer.parseInt(sc.nextLine().trim());
+        for (int i = 0; i < operations; i++) {
+            String line = sc.nextLine().trim();
+            int separator = line.indexOf(' ');
+            String command = separator < 0 ? line : line.substring(0, separator);
+            String song = separator < 0 ? "" : line.substring(separator + 1).trim();
+
+            switch (command.toUpperCase()) {
+                case "ADD":
+                    playlist.addSong(song);
+                    break;
+                case "REMOVE":
+                    playlist.removeSong(song);
+                    break;
+                case "DISPLAY":
+                    playlist.display();
+                    break;
+            }
+        }
+    }
+}

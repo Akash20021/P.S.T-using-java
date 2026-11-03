@@ -1,0 +1,79 @@
+// Week 9 - Task 3: Vehicle Rental System
+import java.util.*;
+
+abstract class Vehicle {
+    String vehicleNumber;
+    double rentPerDay;
+
+    Vehicle(String vehicleNumber, double rentPerDay) {
+        this.vehicleNumber = vehicleNumber;
+        this.rentPerDay = rentPerDay;
+    }
+
+    abstract double calculateRent(int days);
+}
+
+class Car extends Vehicle {
+    Car(String number, double rent) {
+        super(number, rent);
+    }
+
+    @Override
+    double calculateRent(int days) {
+        return rentPerDay * days;
+    }
+}
+
+class Bike extends Vehicle {
+    Bike(String number, double rent) {
+        super(number, rent);
+    }
+
+    @Override
+    double calculateRent(int days) {
+        return rentPerDay * days * 0.90;
+    }
+}
+
+class Truck extends Vehicle {
+    Truck(String number, double rent) {
+        super(number, rent);
+    }
+
+    @Override
+    double calculateRent(int days) {
+        return rentPerDay * days * 1.20;
+    }
+}
+
+public class Week9Task3 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+
+        for (int i = 0; i < n; i++) {
+            int type = sc.nextInt();
+            String number = sc.next();
+            double rentPerDay = sc.nextDouble();
+            int days = sc.nextInt();
+
+            Vehicle vehicle;
+            switch (type) {
+                case 1:
+                    vehicle = new Car(number, rentPerDay);
+                    break;
+                case 2:
+                    vehicle = new Bike(number, rentPerDay);
+                    break;
+                case 3:
+                    vehicle = new Truck(number, rentPerDay);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid vehicle type");
+            }
+
+            System.out.printf(Locale.US, "%s %.2f%n",
+                    vehicle.vehicleNumber, vehicle.calculateRent(days));
+        }
+    }
+}

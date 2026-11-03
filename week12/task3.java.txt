@@ -1,0 +1,24 @@
+// Week 12 - Task 3: Top K Frequent Elements
+import java.util.*;
+
+public class Week12Task3 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        Map<Integer, Integer> frequency = new HashMap<>();
+
+        for (int i = 0; i < n; i++) {
+            int value = sc.nextInt();
+            frequency.put(value, frequency.getOrDefault(value, 0) + 1);
+        }
+
+        int k = sc.nextInt();
+        List<Integer> values = new ArrayList<>(frequency.keySet());
+        values.sort((a, b) -> {
+            int byFrequency = Integer.compare(frequency.get(b), frequency.get(a));
+            return byFrequency != 0 ? byFrequency : Integer.compare(a, b);
+        });
+
+        System.out.println(values.subList(0, Math.min(k, values.size())));
+    }
+}

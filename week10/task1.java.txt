@@ -1,0 +1,26 @@
+
+import java.util.*;
+
+public class Week10Task4 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        ArrayList<Integer> marks = new ArrayList<>();
+
+        for (int i = 0; i < n; i++) {
+            marks.add(scanner.nextInt());
+        }
+
+        if (marks.isEmpty()) {
+            System.out.println("No marks entered.");
+            return;
+        }
+
+        int highest = Collections.max(marks);
+        double average = marks.stream().mapToInt(Integer::intValue).average().orElse(0);
+
+        System.out.println("Marks: " + marks);
+        System.out.println("Highest mark: " + highest);
+        System.out.printf(Locale.US, "Average: %.2f%n", average);
+    }
+}

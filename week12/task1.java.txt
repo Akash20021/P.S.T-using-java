@@ -1,0 +1,25 @@
+// Week 12 - Task 1: Hashtag Frequency Counter
+import java.util.*;
+
+public class Week12Task1 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        Map<String, Integer> frequency = new HashMap<>();
+
+        for (int i = 0; i < n; i++) {
+            String hashtag = sc.next();
+            frequency.put(hashtag, frequency.getOrDefault(hashtag, 0) + 1);
+        }
+
+        List<String> hashtags = new ArrayList<>(frequency.keySet());
+        hashtags.sort((a, b) -> {
+            int byFrequency = Integer.compare(frequency.get(b), frequency.get(a));
+            return byFrequency != 0 ? byFrequency : a.compareTo(b);
+        });
+
+        for (String hashtag : hashtags) {
+            System.out.println(hashtag + " " + frequency.get(hashtag));
+        }
+    }
+}

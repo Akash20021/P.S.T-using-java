@@ -1,0 +1,30 @@
+// Week 11 - Task 3: Degree of an Array
+import java.util.*;
+
+public class Week11Task3 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        Map<Integer, Integer> count = new HashMap<>();
+        Map<Integer, Integer> first = new HashMap<>();
+        Map<Integer, Integer> last = new HashMap<>();
+        int degree = 0;
+
+        for (int i = 0; i < n; i++) {
+            int value = sc.nextInt();
+            count.put(value, count.getOrDefault(value, 0) + 1);
+            first.putIfAbsent(value, i);
+            last.put(value, i);
+            degree = Math.max(degree, count.get(value));
+        }
+
+        int shortest = n;
+        for (int value : count.keySet()) {
+            if (count.get(value) == degree) {
+                shortest = Math.min(shortest, last.get(value) - first.get(value) + 1);
+            }
+        }
+
+        System.out.println(shortest);
+    }
+}
